@@ -1,0 +1,30 @@
+{
+  "cSpell.words": [
+    "datas",
+    "dbfactory",
+    "doltdb",
+    "fatih",
+    "goplantuml",
+    "makerctl",
+    "osfs",
+    "plantuml",
+    "semver",
+    "storer",
+    "Truncable",
+    "Unlockable"
+  ],
+  "go.coverOnSave": true,
+  "go.coverageDecorator": {
+    "type": "highlight",
+    "coveredHighlightColor": "rgba(64,128,128,0.5)",
+    "uncoveredHighlightColor": "rgba(128,64,64,0.25)",
+    "coveredBorderColor": "rgba(64,128,128,0.5)",
+    "uncoveredBorderColor": "rgba(128,64,64,0.25)",
+    "coveredGutterStyle": "blockblue",
+    "uncoveredGutterStyle": "slashyellow"
+  },
+  "git.repositoryScanIgnoredFolders": [
+    "node_modules",
+    "tmp"
+  ]
+}
