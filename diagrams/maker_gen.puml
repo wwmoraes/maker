@@ -1,0 +1,319 @@
+@startuml
+namespace maker {
+    class Config << (S,Aquamarine) >> {
+        + Repositories []*Repository
+
+    }
+    interface File  {
+    }
+    interface FileReader  {
+        + ID() plumbing.Hash
+        + Reader() (io.ReadCloser, error)
+
+    }
+    interface Lockable  {
+        + Lock() error
+
+    }
+    class Maker << (S,Aquamarine) >> {
+        - configFile File
+        - lockFile File
+        - directory billy.Filesystem
+        - conf Config
+        - lock Lock
+
+        + GetRepository(reference string) (*Repository, error)
+        + Add(name string) error
+        + Remove(name string) error
+        + Install(force bool) error
+        + Sync() error
+
+    }
+    class Repository << (S,Aquamarine) >> {
+        + Snippets <font color=blue>map</font>[string]string
+        + Alias string
+        + URL string
+
+        - changeReference(reference string) error
+        - isOnReference(reference string) (bool, error)
+
+        + Init() error
+        + Get(reference string, name string) (FileReader, error)
+
+    }
+    interface Truncable  {
+        + Truncate(size int64) error
+
+    }
+    interface UnlockCloser  {
+    }
+    interface Unlockable  {
+        + Unlock() error
+
+    }
+    class maker.Lock << (T, #FF7700) >>  {
+    }
+}
+"maker.Lockable" *-- "maker.File"
+"maker.Truncable" *-- "maker.File"
+"maker.Unlockable" *-- "maker.File"
+"sync.Mutex" *-- "maker.Repository"
+"v5.Repository" *-- "maker.Repository"
+"maker.Unlockable" *-- "maker.UnlockCloser"
+
+
+"maker.Config" o-- "maker.Repository"
+
+namespace semver {
+    interface Constraint  {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class Label << (S,Aquamarine) >> {
+        + String() string
+        + Compare(target Label) int
+        + String() string
+        + Compare(target Label) int
+
+    }
+    class ParseError << (S,Aquamarine) >> {
+        + Func string
+        + Input string
+        + Err error
+        + Func string
+        + Input string
+        + Err error
+
+        + Error() string
+        + Unwrap() error
+        + Error() string
+        + Unwrap() error
+
+    }
+    interface PartialVersion  {
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+
+    }
+    interface Version  {
+        + Release() string
+        + Release() string
+
+    }
+    class andGroup << (S,Aquamarine) >> {
+        - constraints []Constraint
+        - constraints []Constraint
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class any << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class caret << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class equal << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class greaterEqual << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class greaterThan << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class hyphenRange << (S,Aquamarine) >> {
+        - lower Constraint
+        - lower Constraint
+
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class lessEqual << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class lessThan << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class orGroup << (S,Aquamarine) >> {
+        - constraints []Constraint
+        - constraints []Constraint
+
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+    class semver << (S,Aquamarine) >> {
+        - major int
+        - prerelease *Label
+        - major int
+        - prerelease *Label
+
+        + String() string
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Release() string
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+        + String() string
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Release() string
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+
+    }
+    class semver.Label << (T, #FF7700) >>  {
+    }
+    class tilde << (S,Aquamarine) >> {
+        - version PartialVersion
+        - version PartialVersion
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + String() string
+
+    }
+}
+"semver.PartialVersion" *-- "semver.Version"
+
+"semver.Constraint" <|-- "semver.andGroup"
+"semver.Constraint" <|-- "semver.any"
+"semver.Constraint" <|-- "semver.caret"
+"semver.Constraint" <|-- "semver.equal"
+"semver.Constraint" <|-- "semver.greaterEqual"
+"semver.Constraint" <|-- "semver.greaterThan"
+"semver.Constraint" <|-- "semver.hyphenRange"
+"semver.Constraint" <|-- "semver.lessEqual"
+"semver.Constraint" <|-- "semver.lessThan"
+"semver.Constraint" <|-- "semver.orGroup"
+"semver.PartialVersion" <|-- "semver.semver"
+"semver.Version" <|-- "semver.semver"
+"semver.Constraint" <|-- "semver.tilde"
+
+
+"__builtin__.<font color=blue>map</font>[string]<font color=blue>map</font>[string]string" #.. "maker.Lock"
+"__builtin__.[]string" #.. "semver.Label"
+@enduml

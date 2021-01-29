@@ -1,0 +1,5 @@
+https://github.com/wwmoraes/maker-snippets.git:
+  docker: 80010f2ffa7462039093766cd72aa325f1975e03
+  golang: 80010f2ffa7462039093766cd72aa325f1975e03
+  goplantuml: 80010f2ffa7462039093766cd72aa325f1975e03
+  plantuml: 80010f2ffa7462039093766cd72aa325f1975e03
