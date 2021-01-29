@@ -1,0 +1,29 @@
+@startuml v1
+autoactivate on
+
+boundary Main
+control Maker << (P,LightBlue) >>
+control Repository << (P,LightBlue) >>
+boundary Source
+
+?-> Main : args
+
+ref over Main : check config file
+ref over Main : check lock file
+
+Main -> Maker : New
+return instance
+
+Main -> Maker : install snippet
+Maker -> Maker : check if is not installed
+return error
+Maker -> Repository : Get
+Repository -> Source : Get
+return snippet, error
+return snippet, error
+return error
+
+?<-- Main -- : error
+
+title Maker v1: install
+@enduml

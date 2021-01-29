@@ -1,0 +1,440 @@
+@startuml
+namespace github {
+    class github << (S,Aquamarine) >> {
+        - remote string
+        - remote string
+        - remote string
+
+        + Init() error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+        + Init() error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+        + Init() error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+
+    }
+}
+
+"repository.Reader" <|-- "github.github"
+
+namespace hashes {
+    class Hashes << (S,Aquamarine) >> {
+        + Checksums() *snippet.Checksums
+        + Checksums() *snippet.Checksums
+
+    }
+    class hashes.Hashes << (T, #FF7700) >>  {
+    }
+}
+
+
+namespace local {
+    class local << (S,Aquamarine) >> {
+        - dir string
+        - dir string
+        - dir string
+
+        + Init() error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+        + IndexInto(writer io.Writer) error
+        + Index() error
+        + NewSnippet(name string, versionStr string) (io.WriteCloser, error)
+        + LoadSnippet(name string, versionStr string) (*snippet.Snippet, error)
+        + SaveSnippet(item *snippet.Snippet) error
+        + ReleaseVersion(item *snippet.Snippet) error
+        + Init() error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+        + IndexInto(writer io.Writer) error
+        + Index() error
+        + NewSnippet(name string, versionStr string) (io.WriteCloser, error)
+        + LoadSnippet(name string, versionStr string) (*snippet.Snippet, error)
+        + SaveSnippet(item *snippet.Snippet) error
+        + ReleaseVersion(item *snippet.Snippet) error
+        + Init() error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+        + IndexInto(writer io.Writer) error
+        + Index() error
+        + NewSnippet(name string, versionStr string) (io.WriteCloser, error)
+        + LoadSnippet(name string, versionStr string) (*snippet.Snippet, error)
+        + SaveSnippet(item *snippet.Snippet) error
+        + ReleaseVersion(item *snippet.Snippet) error
+
+    }
+}
+
+"repository.Reader" <|-- "local.local"
+"repository.Writer" <|-- "local.local"
+
+namespace maker {
+    class Maker << (S,Aquamarine) >> {
+        - configFile *os.File
+        - lockFile *os.File
+        - diretory string
+        - lazy bool
+        - config schema.Config
+        - lock schema.Lock
+
+        + Add(name string) error
+        + Remove(name string) error
+        + Install(force bool) error
+        + Sync() error
+        + GetChecksums(snippetName string, force bool) (*snippet.Checksums, error)
+
+    }
+}
+
+
+namespace repository {
+    class Index << (S,Aquamarine) >> {
+        + Add(snippetInfo *snippet.Info) 
+        + MarshalYAML() (<font color=blue>interface</font>{}, error)
+        + UnmarshalYAML(unmarshal <font color=blue>func</font>(<font color=blue>interface</font>{}) error) error
+        + Add(snippetInfo *snippet.Info) 
+        + MarshalYAML() (<font color=blue>interface</font>{}, error)
+        + UnmarshalYAML(unmarshal <font color=blue>func</font>(<font color=blue>interface</font>{}) error) error
+
+    }
+    interface ReadWriter  {
+    }
+    interface Reader  {
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+        + GetSnippetInfo(name string, versionStr string) (*snippet.Info, error)
+        + Fetch(name string, versionStr string) (io.ReadCloser, error)
+        + FetchInto(name string, versionStr string, dst io.WriteCloser) error
+
+    }
+    interface Writer  {
+        + Init() error
+        + Index() error
+        + IndexInto(writer io.Writer) error
+        + NewSnippet(name string, versionStr string) (io.WriteCloser, error)
+        + LoadSnippet(name string, versionStr string) (*snippet.Snippet, error)
+        + ReleaseVersion(snippet *snippet.Snippet) error
+        + Init() error
+        + Index() error
+        + IndexInto(writer io.Writer) error
+        + NewSnippet(name string, versionStr string) (io.WriteCloser, error)
+        + LoadSnippet(name string, versionStr string) (*snippet.Snippet, error)
+        + ReleaseVersion(snippet *snippet.Snippet) error
+
+    }
+    class repository.Index << (T, #FF7700) >>  {
+    }
+    class "[]*snippet.Info" as snippetInfo {
+        'This class was created so that we can correctly have an alias pointing to this name. Since it contains dots that can break namespaces
+    }
+}
+"repository.Reader" *-- "repository.ReadWriter"
+"repository.Writer" *-- "repository.ReadWriter"
+
+
+namespace schema {
+    class Config << (S,Aquamarine) >> {
+        + Snippets <font color=blue>map</font>[string]string
+        + Snippets <font color=blue>map</font>[string]string
+
+    }
+    class Lock << (S,Aquamarine) >> {
+        + Get(snippetName string) (*snippet.Checksums, bool)
+        + Get(snippetName string) (*snippet.Checksums, bool)
+
+    }
+    class schema.Lock << (T, #FF7700) >>  {
+    }
+    class "<font color=blue>map</font>[string]*snippet.Checksums" as fontcolorbluemapfontstringsnippetChecksums {
+        'This class was created so that we can correctly have an alias pointing to this name. Since it contains dots that can break namespaces
+    }
+}
+
+
+namespace semver {
+    interface Constraint  {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class Label << (S,Aquamarine) >> {
+        + String() string
+        + Compare(target Label) int
+        + String() string
+        + Compare(target Label) int
+
+    }
+    class ParseError << (S,Aquamarine) >> {
+        + Func string
+        + Input string
+        + Err error
+        + Func string
+        + Input string
+        + Err error
+
+        + Error() string
+        + Unwrap() error
+        + Error() string
+        + Unwrap() error
+
+    }
+    interface PartialVersion  {
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+
+    }
+    interface Version  {
+        + Release() string
+        + Release() string
+
+    }
+    class andGroup << (S,Aquamarine) >> {
+        - constraints []Constraint
+        - constraints []Constraint
+
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class any << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class caret << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class equal << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class greaterEqual << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class greaterThan << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class hyphenRange << (S,Aquamarine) >> {
+        - lower Constraint
+        - lower Constraint
+
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class lessEqual << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class lessThan << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(target Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class orGroup << (S,Aquamarine) >> {
+        - constraints []Constraint
+        - constraints []Constraint
+
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+        + Match(version Version, includePrerelease bool) bool
+        + IsPrerelease() bool
+
+    }
+    class semver << (S,Aquamarine) >> {
+        - major int
+        - prerelease *Label
+        - major int
+        - prerelease *Label
+
+        + String() string
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Release() string
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+        + String() string
+        + Major() int
+        + Minor() int
+        + Patch() int
+        + Release() string
+        + Prerelease() Label
+        + IsPrerelease() bool
+        + Build() Label
+        + IsBuild() bool
+        + Compare(target PartialVersion) int
+        + CompareRelease(target PartialVersion) int
+        + CompareMajor(target PartialVersion) int
+        + CompareMinor(target PartialVersion) int
+        + ComparePatch(target PartialVersion) int
+        + ComparePrerelease(target PartialVersion) int
+
+    }
+    class semver.Label << (T, #FF7700) >>  {
+    }
+    class tilde << (S,Aquamarine) >> {
+        + Match(target Version, includePrerelease bool) bool
+        + Match(target Version, includePrerelease bool) bool
+
+    }
+}
+"semver.PartialVersion" *-- "semver.Version"
+"semver.PartialVersion" *-- "semver.caret"
+"semver.PartialVersion" *-- "semver.equal"
+"semver.PartialVersion" *-- "semver.greaterEqual"
+"semver.PartialVersion" *-- "semver.greaterThan"
+"semver.PartialVersion" *-- "semver.lessEqual"
+"semver.PartialVersion" *-- "semver.lessThan"
+"semver.PartialVersion" *-- "semver.tilde"
+
+"semver.Constraint" <|-- "semver.andGroup"
+"semver.Constraint" <|-- "semver.any"
+"semver.Constraint" <|-- "semver.caret"
+"semver.Constraint" <|-- "semver.equal"
+"semver.Constraint" <|-- "semver.greaterEqual"
+"semver.Constraint" <|-- "semver.greaterThan"
+"semver.Constraint" <|-- "semver.hyphenRange"
+"semver.Constraint" <|-- "semver.lessEqual"
+"semver.Constraint" <|-- "semver.lessThan"
+"semver.Constraint" <|-- "semver.orGroup"
+"semver.PartialVersion" <|-- "semver.semver"
+"semver.Version" <|-- "semver.semver"
+
+namespace snippet {
+    class Checksums << (S,Aquamarine) >> {
+        + MD5 string
+        + SHA1 string
+        + SHA256 string
+        + SHA512 string
+        + MD5 string
+        + SHA1 string
+        + SHA256 string
+        + SHA512 string
+
+        + IsEqual(target *Checksums) bool
+        + IsEqual(target *Checksums) bool
+
+    }
+    class Identifier << (S,Aquamarine) >> {
+        + Name string
+        + Version string
+        + Name string
+        + Version string
+
+    }
+    class Info << (S,Aquamarine) >> {
+        + EncodeInto(dst io.Writer) error
+        + EncodeInto(dst io.Writer) error
+
+    }
+    class Metadata << (S,Aquamarine) >> {
+        + Description string
+        + Maintainer string
+        + Homepage string
+        + Description string
+        + Maintainer string
+        + Homepage string
+
+    }
+    class Revision << (S,Aquamarine) >> {
+        + Source *Checksums
+        + Release *Checksums
+        + Source *Checksums
+        + Release *Checksums
+
+    }
+    class Snippet << (S,Aquamarine) >> {
+        - data []byte
+        - data []byte
+
+        + Info *Info
+        + Info *Info
+
+        + WriteTo(infoDst io.Writer, snippetDst io.Writer) error
+        + Data() []byte
+        + WriteTo(infoDst io.Writer, snippetDst io.Writer) error
+        + Data() []byte
+
+    }
+}
+"snippet.Identifier" *-- "snippet.Info"
+"snippet.Metadata" *-- "snippet.Info"
+"snippet.Revision" *-- "snippet.Info"
+
+
+"__builtin__.fontcolorbluemapfontcryptoHashstring" #.. "hashes.Hashes"
+"__builtin__.[]string" #.. "semver.Label"
+"repository.snippetInfo" #.. "repository.Index"
+"schema.fontcolorbluemapfontstringsnippetChecksums" #.. "schema.Lock"
+@enduml

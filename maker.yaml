@@ -1,0 +1,9 @@
+repositories:
+  wwmoraes:
+    snippets:
+      docker: master
+      golang: master
+      goplantuml: master
+      help: master
+      plantuml: master
+    url: https://github.com/wwmoraes/maker-snippets.git
