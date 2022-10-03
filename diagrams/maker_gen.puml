@@ -98,10 +98,10 @@ namespace maker {
 
 namespace repository {
     class Index << (S,Aquamarine) >> {
-        + Add(snippetInfo *snippet.Info) 
+        + Add(snippetInfo *snippet.Info)
         + MarshalYAML() (<font color=blue>interface</font>{}, error)
         + UnmarshalYAML(unmarshal <font color=blue>func</font>(<font color=blue>interface</font>{}) error) error
-        + Add(snippetInfo *snippet.Info) 
+        + Add(snippetInfo *snippet.Info)
         + MarshalYAML() (<font color=blue>interface</font>{}, error)
         + UnmarshalYAML(unmarshal <font color=blue>func</font>(<font color=blue>interface</font>{}) error) error
 
