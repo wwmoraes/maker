@@ -6,6 +6,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/wwmoraes/maker.svg)](https://github.com/wwmoraes/maker/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/wwmoraes/maker.svg)](https://github.com/wwmoraes/maker/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwwmoraes%2Fmaker.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwwmoraes%2Fmaker?ref=badge_shield)
 
 [![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/wwmoraes/maker)](https://hub.docker.com/r/wwmoraes/maker)
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/wwmoraes/maker?label=image%20version)](https://hub.docker.com/r/wwmoraes/maker)
@@ -96,3 +97,7 @@ Add notes about how to use the system.
 - References
 
 [unix-philosophy]: http://www.catb.org/esr/writings/taoup/html/ch01s06.html
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fwwmoraes%2Fmaker.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fwwmoraes%2Fmaker?ref=badge_large)
